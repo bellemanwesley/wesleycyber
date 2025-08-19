@@ -1,0 +1,134 @@
+<application>
+<entry name="openai-chatgpt-agent">
+    <default>
+    <port>
+        <member>tcp/80,443</member>
+    </port>
+    </default>
+    <signature>
+    <entry name="JSON Request with Agent Tag">
+        <and-condition>
+        <entry name="And Condition 1">
+            <or-condition>
+            <entry name="Or Condition 1">
+                <operator>
+                <pattern-match>
+                    <qualifier>
+                    <entry name="http-method">
+                        <value>POST</value>
+                    </entry>
+                    </qualifier>
+                    <pattern>(/backend-api/conversation/experimental/generate_autocompletions)</pattern>
+                    <context>http-req-uri-path</context>
+                </pattern-match>
+                </operator>
+            </entry>
+            <entry name="Or Condition 2">
+                <operator>
+                <pattern-match>
+                    <qualifier>
+                    <entry name="http-method">
+                        <value>POST</value>
+                    </entry>
+                    </qualifier>
+                    <pattern>(/backend-api/f/conversation)</pattern>
+                    <context>http-req-uri-path</context>
+                </pattern-match>
+                </operator>
+            </entry>
+            <entry name="Or Condition 3">
+                <operator>
+                <pattern-match>
+                    <qualifier>
+                    <entry name="http-method">
+                        <value>POST</value>
+                    </entry>
+                    </qualifier>
+                    <pattern>(/ces/v1/t)</pattern>
+                    <context>http-req-uri-path</context>
+                </pattern-match>
+                </operator>
+            </entry>
+            </or-condition>
+        </entry>
+        <entry name="And Condition 2">
+            <or-condition>
+            <entry name="Or Condition 1">
+                <operator>
+                <pattern-match>
+                    <qualifier>
+                    <entry name="req-hdr-type">
+                        <value>CONTENT_TYPE</value>
+                    </entry>
+                    </qualifier>
+                    <pattern>(application/json)</pattern>
+                    <context>http-req-headers</context>
+                </pattern-match>
+                </operator>
+            </entry>
+            <entry name="Or Condition 2">
+                <operator>
+                <pattern-match>
+                    <qualifier>
+                    <entry name="req-hdr-type">
+                        <value>CONTENT_TYPE</value>
+                    </entry>
+                    </qualifier>
+                    <pattern>(text/plain)</pattern>
+                    <context>http-req-headers</context>
+                </pattern-match>
+                </operator>
+            </entry>
+            </or-condition>
+        </entry>
+        <entry name="And Condition 3">
+            <or-condition>
+            <entry name="Or Condition 1">
+                <operator>
+                <pattern-match>
+                    <pattern>.*("system_hint"\s*:\s*"agent")</pattern>
+                    <context>http-req-message-body</context>
+                </pattern-match>
+                </operator>
+            </entry>
+            <entry name="Or Condition 2">
+                <operator>
+                <pattern-match>
+                    <pattern>.*("model_slug"\s*:\s*"agent\-mode")</pattern>
+                    <context>http-req-message-body</context>
+                </pattern-match>
+                </operator>
+            </entry>
+            <entry name="Or Condition 3">
+                <operator>
+                <pattern-match>
+                    <pattern>.*("system_hints"\s*:\s*\[\s*"agent"\s*\])</pattern>
+                    <context>http-req-message-body</context>
+                </pattern-match>
+                </operator>
+            </entry>
+            <entry name="Or Condition 4">
+                <operator>
+                <pattern-match>
+                    <pattern>.*("system_hints"\s*:\s*"agent")</pattern>
+                    <context>http-req-message-body</context>
+                </pattern-match>
+                </operator>
+            </entry>
+            </or-condition>
+        </entry>
+        </and-condition>
+        <scope>protocol-data-unit</scope>
+        <order-free>no</order-free>
+    </entry>
+    </signature>
+    <subcategory>artificial-intelligence</subcategory>
+    <category>saas</category>
+    <technology>browser-based</technology>
+    <description>ChatGPT agent helps you accomplish complex online tasks by reasoning, researching, and taking actions on your behalf. It can navigate websites, work with uploaded files, connect to third-party data sources (like email and document repositories), fill out forms, and edit spreadsheets&#x2014;while ensuring you remain in control.</description>
+    <risk>4</risk>
+    <has-known-vulnerability>yes</has-known-vulnerability>
+    <pervasive-use>yes</pervasive-use>
+    <parent-app>openai-chatgpt</parent-app>
+</entry>
+</application>
